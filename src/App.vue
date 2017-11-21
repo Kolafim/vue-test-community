@@ -3,19 +3,19 @@
     <!--Appbar-->
     <appbar :title="this.$route.params.title"></appbar>
     <!--appbar-->
-  
+
     <!--Release-->
     <transition enter-active-class="animated slideInUp"
                 leave-active-class="animated slideOutDown">
       <releasePage v-show="release.isReleasePageShow"></releasePage>
     </transition>
     <!--release-->
-  
+
     <!--Router View-->
     <router-view class="main"
                  :class="{'hide-overflow': common.isHideMainOverflow}"></router-view>
     <!--router view-->
-  
+
     <!--ButtomNav-->
     <bottomnav></bottomnav>
     <!--buttomnav-->
@@ -46,6 +46,7 @@ export default {
 #app {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   .main {

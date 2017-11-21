@@ -7,29 +7,29 @@
                             iconClass="icon"
                             :data-replyid="list.id"
                             @click="tapThumbUp($event)"></mu-icon-button>
-    
+
             <div class="ups-count">{{list.ups.length}}</div>
         </mu-flexbox>
-    
+
         <!--Avatar-->
         <div class="avatar">
-            <img :src="list.author.avatar_url"
+            <img :src="tool.initAvatar(list.author.avatar_url)"
                  alt="">
         </div>
         <!--avatar-->
-    
+
         <!--Info-->
         <div class="info-wrapper">
             <!--username-->
             <div class="username">
                 {{list.author.loginname}}
             </div>
-    
+
             <!--reply time-->
             <div class="reply-time">
                 {{list.create_at | filterTime}}
             </div>
-    
+
             <!--content-->
             <div class="content"
                  v-html="list.content"></div>
@@ -57,7 +57,8 @@ export default {
     computed: {
         ...mapState([
             'info',
-            'login'
+            'login',
+            'tool'
         ])
     },
     filters: {

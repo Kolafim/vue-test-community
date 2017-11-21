@@ -33,19 +33,19 @@
     <!--content-->
 
     <!--Infinite Scroll-->
-    <mu-infinite-scroll loadingText="正在加载..."
+    <!-- <mu-infinite-scroll loadingText="正在加载..."
                         :scroller="scroller"
                         :loading="topics.isFetching"
-                        @load="loadMore" />
+                        @load="loadMore" /> -->
     <!--infinite scroll-->
 
     <!--No More Data-->
-    <noMoreData v-if="this.topics.noMoreData"></noMoreData>
+    <!-- <noMoreData v-if="this.topics.noMoreData"></noMoreData> -->
     <!--no more data-->
 
     <!--Error Data-->
-    <noMoreData v-if="this.topics.errData"
-                title="网络出错了，稍后再试"></noMoreData>
+    <!-- <noMoreData v-if="this.topics.errData"
+                title="网络出错了，稍后再试"></noMoreData> -->
     <!--error data-->
   </div>
 </template>
@@ -82,7 +82,7 @@ export default {
   computed: {
     ...mapState([
       // 'topics',
-      // 'info',
+      'info',
       'common'
     ]),
     topicsDataLen () {
@@ -120,14 +120,14 @@ export default {
       this.CLEAR_STATE_DATA();  // 清楚历史数据
 
       // 如果 noMoreData 为 true，让它变成 false
-      if (this.topics.noMoreData) {
-        this.TOGGLE_NO_MORE_DATA_STATE();
-      };
+      // if (this.topics.noMoreData) {
+      //   this.TOGGLE_NO_MORE_DATA_STATE();
+      // };
 
       // 如果 errData 为 true，让它变成 false
-      if (this.topics.errData) {
-        this.TOGGLE_ERROR_DATA_STATE();
-      };
+      // if (this.topics.errData) {
+      //   this.TOGGLE_ERROR_DATA_STATE();
+      // };
 
       this.page = 1;
 
@@ -162,10 +162,10 @@ export default {
     // 上拉加载更多
     // ==========
     loadMore () {
-      if (!this.topics.isFetching && !this.topics.noMoreData) {
-        this.page += 1;
-        this.http(this.activeTab, this.page, 20);
-      }
+      // if (!this.topics.isFetching && !this.topics.noMoreData) {
+      //   this.page += 1;
+      //   this.http(this.activeTab, this.page, 20);
+      // }
     },
     // 下拉刷新
     // =======
@@ -223,38 +223,4 @@ export default {
 <style lang="scss">
 @import '../../assets/sass/_base.scss';
 
-.topics {
-  position: relative;
-  background: $ExtraLightGray;
-  .mu-circle {
-    border-top-color: $primary !important;
-    border-right-color: $primary !important;
-    border-left-color: $primary !important;
-  }
-  .tabs-wrapper {
-    width: 100%;
-    height: 48px;
-    .mu-tabs {
-      position: fixed;
-      top: 56px;
-      background: #fff !important;
-      .mu-tab-link {
-        color: rgba(31, 45, 61, .7);
-      }
-      .mu-tab-active {
-        font-size: .3rem;
-        color: rgba(31, 45, 61, 1);
-      }
-    }
-    .active-line {
-      background: $primary !important;
-    }
-  }
-  .mu-infinite-scroll {
-    padding: .24rem 0;
-    .mu-infinite-scroll-text {
-      font-size: .28rem;
-    }
-  }
-}
 </style>

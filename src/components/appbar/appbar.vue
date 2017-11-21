@@ -55,7 +55,8 @@ export default {
 @import '../../assets/sass/_base.scss';
 .mu-appbar {
   position: relative;
-  background: $primary !important;
+  height:46px;
+  // background: $primary !important;
   .logo {
     position: absolute;
     top: 50%;

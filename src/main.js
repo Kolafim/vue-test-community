@@ -18,13 +18,14 @@ import 'animate.css'                         // animate.css
 // muse
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
+import 'muse-ui/dist/theme-teal.css'
 Vue.use(MuseUI)
 
 import store from './store/index'
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',  
+  el: '#app',
   store,
   router,
   template: '<App/>',
