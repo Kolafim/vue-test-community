@@ -4,33 +4,33 @@
         <div class="complete"
              v-if="!simple">
             <!--Top Box-->
-            <div class="top-box">
-                <!--avatar-->
-                <div class="avatar"
-                     :data-id="list.id"
-                     :data-userid="list.author_id"
-                     :data-username="list.author.loginname"
-                     @click="tapToUserInfo($event)">
-                    <img :src="list.author.avatar_url"
-                         alt="">
-                </div>
+            <a class="top-box" :href="'#/topics/article/' + list.id"
+                  :data-id="list.id"
+                  :data-userid="list.author_id"
+                  @click="tapToInfo($event)">
                 <!--info-->
-                <div class="info"
-                     :data-id="list.id"
-                     :data-userid="list.author_id"
-                     @click="tapToInfo($event)">
+                <div class="info">
                     <p class="title">{{list.title}}</p>
-    
+
                     <!--tab-->
-                    <div class="tab">{{list.tab}}</div>
+                    <div class="tab">{{tabSem[list.tab] || list.tab}}</div>
                 </div>
-            </div>
+            </a>
             <!--top box-->
-    
+
             <!--Bottom Box-->
             <div class="bottom-box">
                 <!--left-->
                 <div class="left">
+                    <!--avatar-->
+                    <div class="avatar"
+                         :data-id="list.id"
+                         :data-userid="list.author_id"
+                         :data-username="list.author.loginname"
+                         @click="tapToUserInfo($event)">
+                        <img :src="tool.initAvatar(list.author.avatar_url)"
+                             alt="">
+                    </div>
                     <!--username-->
                     <p class="username">{{list.author.loginname}}</p>
                     <!--time-->
@@ -38,7 +38,7 @@
                         {{list.last_reply_at | filterTime}}
                     </div>
                 </div>
-    
+
                 <!--right-->
                 <div class="right">
                     <!--visit-->
@@ -60,7 +60,7 @@
             <!--bottom box-->
         </div>
         <!--complete template-->
-    
+
         <!--Simple Template-->
         <mu-flexbox class="simple"
                     v-if="simple">
@@ -73,7 +73,7 @@
                 <img :src="list.author.avatar_url"
                      alt="">
             </div>
-    
+
             <!--info-->
             <div class="info"
                  :data-id="list.id"
@@ -81,7 +81,7 @@
                  @click="tapToInfo($event)">
                 <!--title-->
                 <div class="title">{{list.title}}</div>
-    
+
                 <!--userinfo-->
                 <mu-flexbox class="userinfo">
                     <div class="username">{{list.author.loginname}}</div>
@@ -94,8 +94,19 @@
 </template>
 
 <script>
+import { mapState} from 'vuex'
 import { filterTime } from '../../assets/js/filters.js'
 export default {
+    data () {
+      return {
+        tabSem: {
+          good:'精华',
+          share:'分享',
+          ask:'问答',
+          job:'招聘'
+        }
+      }
+    },
     props: {
         list: {
             type: Object
@@ -113,9 +124,9 @@ export default {
         // 点击进入详情页
         // ============
         tapToInfo (e) {
-            let info_id = e.currentTarget.dataset.id,
-                user_id = e.currentTarget.dataset.userid
-            this.$emit('info', info_id, user_id);
+            // let info_id = e.currentTarget.dataset.id,
+            //     user_id = e.currentTarget.dataset.userid;
+            // this.$emit('info', info_id, user_id);
         },
         // 点击进入用户详情页
         // ===============
@@ -125,6 +136,11 @@ export default {
                 username = e.currentTarget.dataset.username;
             this.$emit('userInfo', info_id, user_id, username);
         }
+    },
+    computed: {
+      ...mapState([
+        'tool'
+      ])
     }
 }
 </script>
@@ -134,33 +150,23 @@ export default {
 .content-item {
     width: 100%;
     padding: .32rem;
-    margin-top: .12rem;
+    margin-top: .15rem;
     background: #fff;
     box-sizing: border-box;
     @include center-block;
     .complete {
         .top-box {
+            display: block;
             position: relative;
             @include clearfix();
-            .avatar {
-                width: 1rem;
-                height: 1rem;
-                border-radius: 100%;
-                overflow: hidden;
-                background: $ExtraLightGray;
-                @include float();
-                img {
-                    width: 1rem;
-                    height: 1rem;
-                }
-            }
+
             .info {
-                width: 65%;
-                margin-left: .24rem;
+                width: 80%;
+                // margin-left: .24rem;
                 @include float();
                 .title {
-                    font-size: .28rem;
-                    line-height: .46rem;
+                    font-size: .32rem;
+                    line-height: .45rem;
                     -webkit-margin-before: .5em;
                     color: $Black;
                 }
@@ -171,21 +177,38 @@ export default {
                     padding: .01rem .08rem;
                     background: $Gray;
                     border-radius: 4px;
-                    font-size: .24rem;
+                    font-size: .25rem;
                     color: #fff;
                 }
             }
         }
         .bottom-box {
             display: flex;
-            margin-top: .24rem;
-            color: darken($Gray, 20%);
+            margin-top: .1rem;
+            color: darken($Gray, 30%);
             .left {
+                overflow: hidden;
                 flex: 1;
                 display: flex;
                 align-items: center;
+                .avatar {
+                    width: .4rem;
+                    height: .4rem;
+                    border-radius: 100%;
+                    overflow: hidden;
+                    background: $ExtraLightGray;
+                    @include float();
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
                 .username {
-
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    max-width: 35%;
+                    overflow: hidden;
+                    margin-left: .2rem;
                     padding: 0 !important;
                     -webkit-margin-before: 0em;
                     -webkit-margin-after: 0em;
@@ -193,10 +216,12 @@ export default {
                 .time {
                     margin-left: .24rem;
                     font-size: .24rem;
+                    color: darken($Gray, 2%);
                 }
             }
             .right {
                 display: flex;
+                color: darken($Gray, 2%);
                 .item {
                     display: flex;
                     align-items: center;

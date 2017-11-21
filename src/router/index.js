@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import topics from '../pages/topics/topics.vue'
+import article from '../pages/topics/children/article/article.vue'
 import user from '../pages/user/user.vue'
 /* -- */ import usertopics from '../pages/user/children/usertopics/usertopics.vue'
 import message from '../pages/message/message.vue'
@@ -11,8 +12,13 @@ Vue.use(Router)
 const routes = [
   {
     name: 'topics',
-    path: '/topics/:title',
+    path: '/topics',
     component: topics
+  },
+  {
+    name:'article',
+    path:'/topics/article/:id',
+    component:article
   },
   {
     name: 'user',

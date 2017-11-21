@@ -1,8 +1,8 @@
 {
-  "name": "community",
+  "name": "test-community",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "木子七 <286073887@qq.com>",
+  "description": "vue.js test",
+  "author": "Kolafim <719513675@qq.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

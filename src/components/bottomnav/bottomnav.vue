@@ -7,7 +7,7 @@
                           titleClass="title"
                           iconClass="icon"
                           activeClass="active"
-                          to="/topics/话题"
+                          to="/topics"
                           title="话题"
                           icon="whatshot" />
       <mu-bottom-nav-item value="message"
@@ -27,13 +27,13 @@
                           to="/user/个人信息"
                           title="我的"
                           icon="face" />
-      <mu-bottom-nav-item value="test"
+      <!-- <mu-bottom-nav-item value="test"
                           titleClass="title"
                           iconClass="icon"
                           activeClass="active"
                           to="/test/个人信息"
                           title="测试"
-                          icon="face" />
+                          icon="face" /> -->
     </mu-bottom-nav>
   </mu-paper>
 </template>

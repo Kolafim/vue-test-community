@@ -18,7 +18,14 @@ const store = new Vuex.Store({
         message,
         release,
         common,
-        newStore
+        newStore,
+        tool:{
+          state:{
+            initAvatar:function(_url){
+              return _url.replace(/^\/\/(.+)/,'http://$1');
+            }
+          }
+        }
     }
 })
 

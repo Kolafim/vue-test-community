@@ -1,7 +1,7 @@
 <template>
     <mu-flexbox class="infopage"
                 orient="vertical">
-    
+
         <!--Replies Page-->
         <transition enter-active-class="animated slideInUp"
                     leave-active-class="animated slideOutDown">
@@ -9,11 +9,11 @@
                          v-show="info.isRepliesPageShow"></repliesPage>
         </transition>
         <!--replies page-->
-    
+
         <!--Progress-->
         <mainProgress v-show="info.isInfoFetching"></mainProgress>
         <!--progress-->
-    
+
         <!--Content-->
         <mu-flexbox-item grow="1"
                          class="content-wrapper">
@@ -22,13 +22,13 @@
                 <p class="title">
                     {{info.infoData.title}}
                 </p>
-    
+
                 <!--information-->
                 <mu-flexbox class="information">
                     <!--userinfo-->
                     <mu-flexbox class="userinfo">
                         <div class="avatar">
-                            <img :src="info.infoData.author.avatar_url"
+                            <img :src="tool.initAvatar(info.infoData.author.avatar_url)"
                                  alt="">
                         </div>
                         <p class="username">{{info.infoData.author.loginname}}</p>
@@ -38,35 +38,36 @@
                         {{info.infoData.last_reply_at | filterTime}}
                     </mu-flexbox-item>
                 </mu-flexbox>
-    
+
                 <!--textblock-->
                 <div class="textblock"
                      v-html="info.infoData.content"></div>
             </div>
         </mu-flexbox-item>
         <!--content-->
-    
+
         <!--Appbar-->
         <mu-appbar>
             <!--icon back-->
             <mu-icon-button icon="arrow_back"
                             slot="left"
+                            v-show="info.isRepliesPageShow"
                             @click="back"></mu-icon-button>
-    
+
+            <!--button reply-->
+            <div class="btn-reply"
+                 slot="left"
+                 @click="tapToComment">
+                <mu-icon-button icon="chat"></mu-icon-button>
+                <div class="reply-count" v-show="info.infoData.reply_count > 0">{{info.infoData.reply_count}}</div>
+            </div>
+
             <!--button comment-->
             <div class="btn-comment"
                  @click="tapToComment">
                 &nbsp&nbsp说点什么吧
             </div>
-    
-            <!--button reply-->
-            <div class="btn-reply"
-                 slot="right"
-                 @click="tapToComment">
-                <mu-icon-button icon="chat"></mu-icon-button>
-                <div class="reply-count" v-show="info.infoData.reply_count > 0">{{info.infoData.reply_count}}</div>
-            </div>
-    
+
             <!--button collection-->
             <mu-icon-button icon="star_border"
                             iconClass="collect"
@@ -107,7 +108,8 @@ export default {
     computed: {
         ...mapState([
             'info',
-            'login'
+            'login',
+            'tool'
         ])
     },
     components: {
@@ -160,8 +162,8 @@ export default {
                 this.$store.dispatch('showSnackbarAction', {
                     msg: '请先登录',
                     isWarn: true
-                });                
-            } 
+                });
+            }
             // 已登录
             else {
                 if (!this.info.isCollected) {

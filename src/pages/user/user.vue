@@ -6,15 +6,15 @@
             <router-view class="details"></router-view>
         </transition>
         <!--children router-->
-    
+
         <!--Snackbar-->
         <snackbar v-show="common.snack.isShow"></snackbar>
         <!--snackbar-->
-    
+
         <!--Progress-->
         <mainProgress v-show="login.isFetching"></mainProgress>
         <!--progress-->
-    
+
         <transition enter-active-class="animated fadeIn"
                     leave-active-class="animated fadeOut"
                     mode="out-in">
@@ -32,19 +32,19 @@
                                    hintText="accessToken"
                                    v-model="accesstoken"
                                    underlineFocusClass="line-focus" />
-    
+
                     <!--sign up button-->
                     <mu-raised-button label="注册"
                                       :fullWidth="true"
                                       href="https://www.vue-js.com/signup"></mu-raised-button>
-    
+
                     <!--log in button-->
                     <mu-raised-button label="登录"
                                       :fullWidth="true"
                                       backgroundColor="#41b883"
                                       @click.native="tapToLogIn" />
                 </mu-flexbox>
-    
+
                 <!--tip-->
                 <div class="tip">
                     <mu-flexbox class="question">
@@ -53,7 +53,7 @@
                                  color="#e96900"></mu-icon>
                         <p @click="tapToToggleTip">如何获取 accessToken？</p>
                     </mu-flexbox>
-    
+
                     <transition enter-active-class="animated flipInX"
                                 leave-active-class="animated flipOutX">
                         <div class="content"
@@ -61,11 +61,11 @@
                             <a href="https://www.vue-js.com/">官方网站</a> 登录后，在设置页面可以看到自己的 <b>accessToken</b>。<br/>
                             将 <b>accessToken</b> 复制，粘贴到⬆文本框，即可登录。
                         </div>
-                    </transition>    
+                    </transition>
                 </div>
             </mu-flexbox>
             <!--log in-->
-    
+
             <!--User Info-->
             <mu-flexbox class="userinfo-wrapper"
                         orient="vertical"
@@ -75,7 +75,7 @@
                 <mu-flexbox class="userinfo">
                     <!--avatar-->
                     <div class="avatar">
-                        <img :src="login.data.avatar_url"
+                        <img :src="tool.initAvatar(login.data.avatar_url)"
                              alt="">
                     </div>
                     <!--info-->
@@ -91,7 +91,7 @@
                         </mu-flexbox>
                     </div>
                 </mu-flexbox>
-    
+
                 <!--action-->
                 <mu-flexbox orient="vertical"
                             class="action-wrapper">
@@ -106,10 +106,9 @@
                         </div>
                         <div class="count"
                              v-if="COLLECTS_COUNT > 0">{{COLLECTS_COUNT}}</div>
-                        <mu-icon value="navigate_next"
-                                 style="position: absolute;right: 0;color: #D3DCE6"></mu-icon>
+                        <mu-icon class="r-m-i" value="navigate_next"></mu-icon>
                     </mu-flexbox>
-    
+
                     <!--item-->
                     <mu-flexbox class="action-item"
                                 @click.native="tapToUserTopics('我参与的话题', 'recent_replies')">
@@ -121,10 +120,9 @@
                         </div>
                         <div class="count"
                              v-if="REPLIES_COUNT > 0">{{REPLIES_COUNT}}</div>
-                        <mu-icon value="navigate_next"
-                                 style="position: absolute;right: 0;color: #D3DCE6"></mu-icon>
+                        <mu-icon class="r-m-i" value="navigate_next"></mu-icon>
                     </mu-flexbox>
-    
+
                     <!--item-->
                     <mu-flexbox class="action-item"
                                 @click.native="tapToUserTopics('我最近的话题', 'recent_topics')">
@@ -136,12 +134,11 @@
                         </div>
                         <div class="count"
                              v-if="MY_TOPICS_COUNT > 0">{{MY_TOPICS_COUNT}}</div>
-                        <mu-icon value="navigate_next"
-                                 style="position: absolute;top: 50%;right: 0;transform: translate3d(0, -50%, 0);color: #D3DCE6"></mu-icon>
-    
+                        <mu-icon class="r-m-i" value="navigate_next"></mu-icon>
+
                     </mu-flexbox>
                 </mu-flexbox>
-    
+
                 <!--button-->
                 <mu-flexbox class="btn-logout"
                             align="center"
@@ -171,7 +168,7 @@ export default {
     },
     created () {
         // 如果 cookie 缓存存在，则显示 accesstoken
-        let accesstoken = getCookie('accesstoken');
+        let accesstoken = getCookie('accesstoken') || 'a97e7a07-e6ee-4fa1-942b-a7a06015e28b';
         if (accesstoken) {
             this.accesstoken = accesstoken
         }
@@ -179,7 +176,8 @@ export default {
     computed: {
         ...mapState([
             'login',
-            'common'
+            'common',
+            'tool'
         ]),
         ...mapGetters([
             'REPLIES_COUNT',
@@ -352,6 +350,13 @@ export default {
                     color: $LightBlack;
                     border-radius: 100%;
                     background: $LightGray;
+                }
+                .r-m-i {
+                  color: #D3DCE6;
+                  position: absolute;
+                  top: 50%;
+                  right: 0px;
+                  transform: translate3d(0px, -50%, 0px);
                 }
                 &:last-child .title {
                     border-bottom: none;
